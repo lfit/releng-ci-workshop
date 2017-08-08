@@ -1,0 +1,29 @@
+# Ignore Vim temporary files
+.*.sw?
+
+# Maven
+target/
+
+# Vagrant
+.vagrant
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.project
+
+# VSCode
+.vscode
+
+# Python
+.cache/
+.eggs/
+.tox/
+__pycache__/
+*.egg-info/
+*.pyc
+docs/_build/
+dist/
+MANIFEST

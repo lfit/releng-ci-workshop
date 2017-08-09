@@ -1,0 +1,58 @@
+---
+version: '3'
+services:
+    ldap:
+        image: osixia/openldap:latest
+        container_name: releng-ldap
+        env_file: config/ldap.env
+        command: "--loglevel debug --copy-service"
+        volumes:
+            - ./config/ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
+        ports:
+            - "636:636"
+    jenkins:
+        build: ./jenkins
+        container_name: releng-jenkins
+        env_file: config/jenkins.env
+        volumes:
+            - jenkins:/var/jenkins_home
+        expose:
+            - "8080"
+        depends_on:
+            - ldap
+            - nginx
+        links:
+            - ldap
+            - nginx
+    gerrit:
+        image: openfrontier/gerrit:latest
+        container_name: releng-gerrit
+        env_file: config/gerrit.env
+        volumes:
+            - gerrit:/var/gerrit/review_site
+        ports:
+            - "8081:8080"
+            - "29418:29418"
+        depends_on:
+            - ldap
+            - nginx
+        links:
+            - ldap
+            - nginx
+    postgres:
+        image: postgres:latest
+        env_file: config/postgres.env
+        expose:
+            - "5432"
+    nginx:
+        image: nginx:latest
+        restart: always
+        container_name: releng-ingress
+        ports:
+            - "8000:8000"
+            - "8001:8001"
+        volumes:
+            - ./config/nginx:/etc/nginx/conf.d
+volumes:
+    jenkins:
+    gerrit:

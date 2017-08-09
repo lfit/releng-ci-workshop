@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c64e779d_641de20b",
+        "filename": "docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2017-08-09T19:49:36Z",
+      "side": 1,
+      "message": "\u003e The other files are all EPL, why did you switch to Apache 2.0 here?\n\nWhoops! I default to Apache2 and added this before I remembered our other stuff is EPL. Should be in here anyways as this is a configuration file.",
+      "parentUuid": "0d17a5bc_15060968",
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51900025_a2b04798",
         "filename": "jenkins/authorization.groovy",
         "patchSetId": 2

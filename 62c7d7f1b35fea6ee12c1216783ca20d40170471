@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb2de474_639511b9",
+        "filename": "README.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d17a5bc_15060968",
+        "filename": "docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "The other files are all EPL, why did you switch to Apache 2.0 here?",
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51900025_a2b04798",
+        "filename": "jenkins/authorization.groovy",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dd500a1_a1c912fa",
+        "filename": "jenkins/authorization.groovy",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 4
+      },
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c394d15_003dad19",
+        "filename": "jenkins/hostname.groovy",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "378da4d5_ea1b19f1",
+        "filename": "jenkins/hostname.groovy",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 4
+      },
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a162329_81a4452b",
+        "filename": "jenkins/ldap.groovy",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5303e8ed_904ec226",
+        "filename": "jenkins/ldap.groovy",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-08-09T18:34:18Z",
+      "side": 1,
+      "message": "Dangling white space",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 4
+      },
+      "revId": "62c7d7f1b35fea6ee12c1216783ca20d40170471",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

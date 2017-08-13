@@ -26,7 +26,7 @@ objectClass: inetOrgPerson
 cn: Sandbox
 sn: User
 displayname: Sandbox User
-mail: sandbox@localhost
+mail: sandbox@example.org
 userpassword: {SSHA}WyQT/fg9FHJ/zcXsdvs51tk5vSlyL0fM
 
 dn: cn=sandbox-admins,ou=Groups,dc=example,dc=org

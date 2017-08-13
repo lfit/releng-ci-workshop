@@ -26,17 +26,23 @@ containers.
 Quick Reference
 ---------------
 
-Jenkins
-  localhost:8001
+Add the following to /etc/hosts::
 
-Gerrit
-  localhost:8000
-  localhost:29418
+  127.0.1.1 jenkins.localhost
+  127.0.1.2 gerrit.localhost
 
 Default user account: sandbox/sandbox
 
 Getting Started
 ---------------
+
+Add the following to /etc/hosts::
+
+  127.0.1.1 jenkins.localhost
+  127.0.1.2 gerrit.localhost
+
+.. Note: This is the same as setting the 'Host' header when sending a GET
+   request to localhost: `curl -H "Host: gerrit.localhost" localhost`
 
 .. code-block::
 
@@ -44,10 +50,10 @@ Getting Started
 
 Will bring up an environment containing all the services with
 authentication backed by LDAP, a simple ci-management repo in
-Gerrit[TODO], and a basic job in Jenkins that verifies commits to the
-ci-management repo[TODO].
+Gerrit, and a basic job in Jenkins that verifies commits to the
+ci-management repo.
 
-To bring up a single service in the foreground you can use[TODO - Nginx]:
+To bring up a single service in the foreground you can use:
 
 .. code-block::
 
@@ -75,19 +81,52 @@ For other useful docker-compose commands such as logs, see::
 
   docker-compose -h
 
-Default User
-------------
+Next Steps
+----------
 
-The default username and password in LDAP are:
+Once the environment is up and running, copy your ssh public-key and add
+it to the sandbox user in Gerrit. This can be either be done through the
+web interface or from the commandline::
 
- user: sandbox
- pass: sandbox
+  curl -L -X POST -u "sandbox:sandbox" -H "Content-type:text/plain" \
+    -d @$HOME/.ssh/id_rsa.pub http://gerrit.localhost/a/accounts/self/sshkeys/
 
-This user is part of the 'sandbox-admins' group and should have full
-admin rights on all services.
+.. note: It's important here the Content-type header is set, as Gerrit
+   always expects JSON, and URLs must end in '/'
+
+Then you can clone the ci-management repo and modify it to your hearts
+content::
+
+  git clone ssh://sandbox@gerrit.localhost:29418/ci-management.git
+
+Set the gitreview username::
+
+  git config --add gitreview.username "sandbox"
+
+And ensure the Change-Id hook exists::
+
+  git review -s
+
+Putting up a patchset for review that modifies "\*.yaml" files should
+trigger the ci-management-jjb-verify job and add a -1/+1 Verified vote.
+
+Notes
+-----
+
+Init Container
+~~~~~~~~~~~~~~
+
+In order to fully configure both Jenkins and Gerrit, another container
+'init' is added as part of the startup to generate ssh keys, create the
+ci-management repo, configure users, and push the ci-management jobs to
+Jenkins.
+
+This is done in a weakly idempotent fashion by creating files after the
+command execute successfuly, so that if the environment is restarted the
+container doesn't die or modify existing data.
 
 Goals
------
+~~~~~
 
 The goal of this project is to have an easily created workshop where
 releng work can be tested or proof-of-concepts created.
@@ -101,17 +140,19 @@ Some examples:
  * Gerrit/LDAP group integration
 
 TODO
-----
+~~~~
 
 The following is a list of automation tasks still needed before the
-environment can be considered usable:
+environment can be considered stable:
 
-Nginx:
-- [ ] Configure NGINX container to use environment variables_
-      Note: If both Jenkins and Gerrit aren't both started, the NGINX
-      container will continuously restart. This can be worked around by
-      disabling the other service you don't want to use:
-      `mv nginx/config/gerrit.conf gerrit.conf.disabled`
+General:
+- [ ] Replace 'sandbox' names with 'workshop' since sandbox was just a
+      placeholder
+- [ ] Setup OpenLDAP over SSL by default
+- [ ] Collapse environment config into single file and add lots of
+      comments, so users don't need to track down the correct file
+- [ ] Make things more configurable. There are a lot of hardcoded names
+      in Groovy scripts which could be pulled from environment variables
 
 Nexus:
 - [ ] Setup and configure Nexus
@@ -120,22 +161,17 @@ Gerrit:
 - [ ] Remove postgres container configuration and replace with MariaDB
   (or make optional)
 
-General:
-- [ ] Setup OpenLDAP over SSL by default
-- [ ] Create a basic ci-management repository in Gerrit
-- [ ] Connect and configure Gerrit and Jenkins automatically
-  - [ ]  Have the Gerrit configuration setup in Jenkins
-  - [ ]  Create Gerrit user with ssh pubkey from Jenkins
-
 Jenkins:
 - [ ] Fix (on Jenkins restart)::
       WARNING: Caught exception evaluating:
       instance.hasExplicitPermission(attrs.sid,p) in /configureSecurity/.
       Reason: java.lang.NullPointerException
-- [ ] Create a basic SSH Jenkins agent that jobs can be ran on
-- [ ] Disable CLI remoting
-- [ ] Enable Agent -> Master Access Controls
+- [ ] Make Groovy scripts Idempotent
+
+Init:
+- [ ] Make steps strongly idempotent (verify the state they modify)
 
 .. _environment: https://docs.docker.com/compose/environment-variables/#configuring-compose-using-environment-variables
 .. _variables: https://docs.docker.com/samples/nginx/#using-environment-variables-in-nginx-configuration
 .. _openfrontier: https://github.com/openfrontier/ci-compose
+.. _jwilder/nginx-proxy: https://github.com/jwilder/nginx-proxy

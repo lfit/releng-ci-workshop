@@ -33,10 +33,10 @@ def strategy = new GlobalMatrixAuthorizationStrategy()
 
 strategy.add(Jenkins.ADMINISTER, 'sandbox-admins')
 
-strategy.add(hudson.model.Hudson.READ,'anonymous')
-strategy.add(hudson.model.Item.READ,'anonymous')
-strategy.add(hudson.model.Item.WORKSPACE,'anonymous')
-strategy.add(hudson.model.View.READ,'anonymous')
+strategy.add(Jenkins.READ,'anonymous')
+strategy.add(Item.READ,'anonymous')
+strategy.add(Item.WORKSPACE,'anonymous')
+strategy.add(View.READ,'anonymous')
 
 instance.setAuthorizationStrategy(strategy)
 

@@ -16,16 +16,23 @@ RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
-# Set the instance hostname
-COPY hostname.groovy /usr/share/jenkins/ref/init.groovy.d/hostname.groovy
+ENV JENKINS_GROOVY_INIT /usr/share/jenkins/ref/init.groovy.d/
 
-# Setup basic security
-# TODO: Fix matrix permission causing NullPointerException ?
-# COPY authorization.groovy /usr/share/jenkins/ref/init.groovy.d/authorization.groovy
+# Configure Basic Security
+COPY basic-security-setup.groovy $JENKINS_GROOVY_INIT
 
-COPY ldap.groovy /usr/share/jenkins/ref/init.groovy.d/ldap.groovy
+# Configure LDAP
+COPY ldap.groovy $JENKINS_GROOVY_INIT
 
-# TODO: Prevent Cross Site Script Forgery
-# TODO: Disable CLI over remoting
-# TODO: Enable Agent/Master Access Control
-# TODO: Disable JNLP Port
+# Configure Gerrit-Trigger
+COPY gerrit-config.groovy $JENKINS_GROOVY_INIT
+
+# Set Global Properties
+COPY global-properties.groovy $JENKINS_GROOVY_INIT
+
+# Create Jenkins SSH Agent
+COPY create-jenkins-agent.groovy $JENKINS_GROOVY_INIT
+
+# Create JJB INI in Config File Plugin
+COPY create-jjbini.groovy $JENKINS_GROOVY_INIT
+

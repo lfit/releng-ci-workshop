@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e10b79_650f62d4",
+        "filename": "README.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-09-07T15:49:41Z",
+      "side": 1,
+      "message": "perhaps we should do gerrit.local / jenkins.local so it looks more like a domain. Reason is in Chrome if I just type \"Gerrit\" into the address bar it will treat it as a search instead of a domain.",
+      "revId": "a739a552db14a8920be7641072ffd97dfdee2c3b",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "558ba462_ee54c575",
+        "filename": "jenkins/agent/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-09-07T15:49:41Z",
+      "side": 1,
+      "message": "Should install python-tox too.",
+      "revId": "a739a552db14a8920be7641072ffd97dfdee2c3b",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

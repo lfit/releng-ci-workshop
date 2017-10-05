@@ -13,7 +13,7 @@ services:
     ldap:
         image: osixia/openldap:latest
         container_name: releng-ldap
-        env_file: config/ldap.env
+        env_file: config.env
         command: "--loglevel debug --copy-service"
         volumes:
             - ./config/ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
@@ -22,7 +22,10 @@ services:
     jenkins:
         build: ./jenkins
         container_name: releng-jenkins
-        env_file: config/jenkins.env
+        env_file: config.env
+        environment:
+            - VIRTUAL_HOST=jenkins.localhost
+            - VIRTUAL_PORT=8080
         volumes:
             - jenkins:/var/jenkins_home
         expose:
@@ -44,7 +47,10 @@ services:
     gerrit:
         image: openfrontier/gerrit:latest
         container_name: releng-gerrit
-        env_file: config/gerrit.env
+        env_file: config.env
+        environment:
+            - VIRTUAL_HOST=gerrit.localhost
+            - VIRTUAL_PORT=8080
         volumes:
             - gerrit:/var/gerrit/review_site
         expose:
@@ -59,7 +65,7 @@ services:
             - nginx
     postgres:
         image: postgres:latest
-        env_file: config/postgres.env
+        env_file: config.env
         expose:
             - "5432"
     nginx:

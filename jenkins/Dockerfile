@@ -19,20 +19,20 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 ENV JENKINS_GROOVY_INIT /usr/share/jenkins/ref/init.groovy.d/
 
 # Configure Basic Security
-COPY basic-security-setup.groovy $JENKINS_GROOVY_INIT
+COPY scripts/basic-security-setup.groovy $JENKINS_GROOVY_INIT
 
 # Configure LDAP
-COPY ldap.groovy $JENKINS_GROOVY_INIT
+COPY scripts/ldap.groovy $JENKINS_GROOVY_INIT
 
 # Configure Gerrit-Trigger
-COPY gerrit-config.groovy $JENKINS_GROOVY_INIT
+COPY scripts/gerrit-config.groovy $JENKINS_GROOVY_INIT
 
 # Set Global Properties
-COPY global-properties.groovy $JENKINS_GROOVY_INIT
+COPY scripts/global-properties.groovy $JENKINS_GROOVY_INIT
 
 # Create Jenkins SSH Agent
-COPY create-jenkins-agent.groovy $JENKINS_GROOVY_INIT
+COPY scripts/create-jenkins-agent.groovy $JENKINS_GROOVY_INIT
 
 # Create JJB INI in Config File Plugin
-COPY create-jjbini.groovy $JENKINS_GROOVY_INIT
+COPY scripts/create-jjbini.groovy $JENKINS_GROOVY_INIT
 

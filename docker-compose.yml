@@ -16,7 +16,7 @@ services:
         env_file: config.env
         command: "--loglevel debug --copy-service"
         volumes:
-            - ./config/ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
+            - ./ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
         ports:
             - "636:636"
     jenkins:

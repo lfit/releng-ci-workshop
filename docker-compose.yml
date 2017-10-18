@@ -1,3 +1,4 @@
+# Container Versions stored in '.env'
 ---
 version: '3'
 services:
@@ -11,7 +12,7 @@ services:
             - jenkins
             - gerrit
     ldap:
-        image: osixia/openldap:latest
+        image: "osixia/openldap:$OPENLDAP_CONTAINER_VERSION"
         container_name: releng-ldap
         env_file: config.env
         command: "--loglevel debug --copy-service"
@@ -20,7 +21,10 @@ services:
         ports:
             - "636:636"
     jenkins:
-        build: ./jenkins
+        build:
+            context: ./jenkins
+            args:
+                - JENKINS_VERSION=$JENKINS_CONTAINER_VERSION
         container_name: releng-jenkins
         env_file: config.env
         environment:
@@ -45,7 +49,7 @@ services:
         environment:
             - JENKINS_SLAVE_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUX11sDBXacCE/LBdcXO4E27OZbWtjNadXPGIRTN1leUFWJlnljlZT31Wbml8fvp+5BKbVRHP/W9IWj/PlBTxrxOPMN2Rch40tarPU1PxWJYM203n6Ac+GWKcfSPiikmfXiJ+pJHs+0E1MVhpLe08pb3qVdvwAGdQXVC53dg9ebrb5KirbLvWdEMewfVlxdB2ru2p358QN5Y7HHsAqW1sMr18G1/O5bVJl7g1JbnQ+/YjVaJRo7cDuonTOeatlEMfZZXzlermgXCcVFSIo/oKuKbtilZ2ye17ax9kN4rfVAAXIeOAUZWeCad32EdQEO7xL956ZftXyV+jlw03CndD5
     gerrit:
-        image: openfrontier/gerrit:latest
+        image: "openfrontier/gerrit:$GERRIT_CONTAINER_VERSION"
         container_name: releng-gerrit
         env_file: config.env
         environment:

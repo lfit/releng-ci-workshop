@@ -7,7 +7,9 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-FROM jenkins/jenkins:lts
+ARG JENKINS_VERSION=lts
+
+FROM jenkins/jenkins:${JENKINS_VERSION}
 
 # Disable upgrade wizard
 RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state

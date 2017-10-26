@@ -88,11 +88,7 @@ Once the environment is up and running, copy your ssh public-key and add
 it to the sandbox user in Gerrit. This can be either be done through the
 web interface or from the commandline::
 
-  curl -L -X POST -u "sandbox:sandbox" -H "Content-type:text/plain" \
-    -d @$HOME/.ssh/id_rsa.pub http://gerrit.localhost/a/accounts/self/sshkeys/
-
-.. note: It's important here the Content-type header is set, as Gerrit
-   always expects JSON, and URLs must end in '/'
+  ./gerrit-auth.sh ~/.ssh/id_rsa.pub
 
 Then you can clone the ci-management repo and modify it to your hearts
 content::

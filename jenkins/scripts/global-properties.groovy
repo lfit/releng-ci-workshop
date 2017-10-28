@@ -15,6 +15,15 @@ instance = Jenkins.getInstance()
 globalNodeProperties = instance.getGlobalNodeProperties()
 envVarsNodePropertyList = globalNodeProperties.getAll(hudson.slaves.EnvironmentVariablesNodeProperty.class)
 
+def env = System.getenv()
+
+String GIT_URL = env.get('JJB_GIT_URL')
+String NEXUS_URL = env.get('JJB_NEXUS_URL')
+String NEXUSPROXY = env.get('JJB_NEXUSPROXY')
+String LOGS_SERVER = env.get('JJB_LOGS_SERVER')
+String SILO = env.get('JJB_SILO')
+String JENKINS_HOSTNAME = env.get('JJB_JENKINS_HOSTNAME')
+
 newEnvVarsNodeProperty = null
 envVars = null
 
@@ -27,6 +36,11 @@ if ( envVarsNodePropertyList == null || envVarsNodePropertyList.size() == 0 ) {
 
 }
 
-envVars.put("GIT_URL", "ssh://gerrit:29418/")
+(GIT_URL != null) && envVars.put("GIT_URL", GIT_URL)
+(NEXUS_URL != null) && envVars.put("NEXUS_URL", NEXUS_URL)
+(NEXUSPROXY != null) && envVars.put("NEXUSPROXY", NEXUSPROXY)
+(LOGS_SERVER != null) && envVars.put("LOGS_SERVER", LOGS_SERVER)
+(SILO != null) && envVars.put("SILO", SILO)
+(JENKINS_HOSTNAME != null) && envVars.put("JENKINS_HOSTNAME", JENKINS_HOSTNAME)
 
 instance.save()

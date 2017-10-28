@@ -178,3 +178,34 @@ if [ ! -f /init/step-8.done ]; then
 
     touch /init/step-8.done
 fi
+
+##
+# Nexus Setup
+##
+/docker-entrypoint-init.d/wait-for-it.sh nexus:8081 -t 30
+
+
+# Create Nexus Repos
+if [ ! -f /init/step-9.done ]; then
+    cat > /init/repo.json <<-EOF
+{
+  "data": {
+    "name": "logs",
+    "repoType": "hosted",
+    "providerRole": "org.sonatype.nexus.proxy.repository.WebSiteRepository",
+    "exposed": true,
+    "id": "logs",
+    "provider": "site",
+    "writePolicy": "ALLOW_WRITE",
+    "browseable": true,
+    "indexable": true,
+    "notFoundCacheTTL": 1440,
+    "repoPolicy": "MIXED"
+  }
+}
+EOF
+    curl -H "Content-Type: application/json" -X POST -d @/init/repo.json \
+      -u admin:admin123 http://nexus:8081/nexus/service/local/repositories
+
+    touch /init/step-9.done
+fi

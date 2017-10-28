@@ -9,7 +9,7 @@ The primary services are:
 
  * Gerrit
  * Jenkins
- * Nexus [TODO]
+ * Nexus
 
 And the secondary services that support these:
 
@@ -30,8 +30,10 @@ Add the following to /etc/hosts::
 
   127.0.1.1 jenkins.localhost
   127.0.1.2 gerrit.localhost
+  127.0.1.3 nexus.localhost
 
-Default user account: sandbox/sandbox
+Jenkins/Gerrit login: sandbox/sandbox
+Nexus login: admin/admin123
 
 Getting Started
 ---------------
@@ -40,6 +42,7 @@ Add the following to /etc/hosts::
 
   127.0.1.1 jenkins.localhost
   127.0.1.2 gerrit.localhost
+  127.0.1.3 nexus.localhost
 
 .. Note: This is the same as setting the 'Host' header when sending a GET
    request to localhost: `curl -H "Host: gerrit.localhost" localhost`
@@ -52,37 +55,6 @@ Will bring up an environment containing all the services with
 authentication backed by LDAP, a simple ci-management repo in
 Gerrit, and a basic job in Jenkins that verifies commits to the
 ci-management repo.
-
-To bring up a single service in the foreground you can use:
-
-.. code-block::
-
-  docker-compose up $SERVICE
-
-Note: dependent services will still be launched but in the background.
-Hitting '^C' will stop this service, but not the others.
-
-If a service is backed by a Dockerfile (most will be eventually), then
-changes to the Dockerfile or files under '$SERVICE/' will require
-rebuilding the container:
-
-.. code-block::
-
-  docker-compose build
-
-To tear down the environment removing all the volumes, and start from
-scratch, run:
-
-.. code-block::
-
-  docker-compose down -v
-
-For other useful docker-compose commands such as logs, see::
-
-  docker-compose -h
-
-Next Steps
-----------
 
 Once the environment is up and running, copy your ssh public-key and add
 it to the sandbox user in Gerrit. This can be either be done through the
@@ -108,6 +80,45 @@ trigger the ci-management-jjb-verify job and add a -1/+1 Verified vote.
 
 Notes
 -----
+
+To bring up a single service in the foreground you can use:
+
+.. code-block::
+
+  docker-compose up $SERVICE
+
+Note: dependent services will still be launched but in the background.
+Hitting '^C' will stop this service, but not the others.
+
+If a service is backed by a Dockerfile, then changes to the Dockerfile
+or files under '$SERVICE/' will require rebuilding the container:
+
+.. code-block::
+
+  docker-compose build
+
+To tear down the environment removing all the volumes, and start from
+scratch, run:
+
+.. code-block::
+
+  docker-compose down -v
+
+To run a specific version of one of the services, edit the `.env` file,
+and rebuild the containers. For example, to run Jenkins 2.80 set the
+value in the `.env` file::
+
+  JENKINS_CONTAINER_VERSION=2.80
+
+and run::
+
+  docker-compose up -d --build
+
+to rebuild the Jenkins image before launching it.
+
+For other useful docker-compose commands such as logs, see::
+
+  docker-compose -h
 
 Init Container
 ~~~~~~~~~~~~~~
@@ -145,13 +156,15 @@ General:
 - [ ] Replace 'sandbox' names with 'workshop' since sandbox was just a
       placeholder
 - [ ] Setup OpenLDAP over SSL by default
-- [ ] Collapse environment config into single file and add lots of
-      comments, so users don't need to track down the correct file
 - [ ] Make things more configurable. There are a lot of hardcoded names
       in Groovy scripts which could be pulled from environment variables
+- [x] Collapse environment config into single file and add lots of
+      comments, so users don't need to track down the correct file
 
 Nexus:
-- [ ] Setup and configure Nexus
+- [ ] Configure Nexus to use LDAP (admin/admin123, or LDAP)
+- [x] Setup and configure Nexus
+  - [x] Create 'logs' Nexus site repo.
 
 Gerrit:
 - [ ] Remove postgres container configuration and replace with MariaDB
@@ -163,6 +176,15 @@ Jenkins:
       instance.hasExplicitPermission(attrs.sid,p) in /configureSecurity/.
       Reason: java.lang.NullPointerException
 - [ ] Make Groovy scripts Idempotent
+- [x] Set Markup Formatter to HTML Output
+- [x] Add LOGS_SERVER, SILO, NEXUS_URL, JENKINS_HOSTNAME
+- [x] Create XML config file 'jenkins-log-archives-settings' (depends on credentials)
+- [x] Install environment injector plugin
+      https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin
+- [x] Install plugin for build description
+      https://plugins.jenkins.io/description-setter
+- [x] Manually install postbuildscript.hpi
+      http://mirrors.jenkins-ci.org/plugins/postbuildscript/0.17/postbuildscript.hpi
 
 Init:
 - [ ] Make steps strongly idempotent (verify the state they modify)

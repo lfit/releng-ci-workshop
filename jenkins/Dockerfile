@@ -18,6 +18,11 @@ RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
+# Download PostBuildScript Plugin
+RUN curl --fail -sSL \
+  http://ftp.osuosl.org/pub/jenkins/plugins/postbuildscript/0.17/postbuildscript.hpi \
+  -o /usr/share/jenkins/ref/plugins/postbuildscript.hpi
+
 ENV JENKINS_GROOVY_INIT /usr/share/jenkins/ref/init.groovy.d/
 
 # Configure Basic Security
@@ -38,3 +43,5 @@ COPY scripts/create-jenkins-agent.groovy $JENKINS_GROOVY_INIT
 # Create JJB INI in Config File Plugin
 COPY scripts/create-jjbini.groovy $JENKINS_GROOVY_INIT
 
+# Create Nexus settings.xml
+COPY scripts/create-nexus-settings.groovy $JENKINS_GROOVY_INIT

@@ -27,3 +27,8 @@ __pycache__/
 docs/_build/
 dist/
 MANIFEST
+
+# Cloned repositories
+All-Projects
+All-Users
+ci-management

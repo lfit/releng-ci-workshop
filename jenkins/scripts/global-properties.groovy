@@ -10,10 +10,13 @@
  *
  */
 import jenkins.model.*
+import hudson.markup.RawHtmlMarkupFormatter
 
 instance = Jenkins.getInstance()
 globalNodeProperties = instance.getGlobalNodeProperties()
-envVarsNodePropertyList = globalNodeProperties.getAll(hudson.slaves.EnvironmentVariablesNodeProperty.class)
+envVarsNodePropertyList =
+    globalNodeProperties.getAll(
+        hudson.slaves.EnvironmentVariablesNodeProperty.class)
 
 def env = System.getenv()
 
@@ -23,6 +26,9 @@ String NEXUSPROXY = env.get('JJB_NEXUSPROXY')
 String LOGS_SERVER = env.get('JJB_LOGS_SERVER')
 String SILO = env.get('JJB_SILO')
 String JENKINS_HOSTNAME = env.get('JJB_JENKINS_HOSTNAME')
+
+// Set Markup Formatter to 'Safe HTML' so nexus build log links show up.
+instance.setMarkupFormatter(new RawHtmlMarkupFormatter(false))
 
 newEnvVarsNodeProperty = null
 envVars = null

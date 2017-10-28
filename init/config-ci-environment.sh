@@ -9,7 +9,7 @@ GERRIT_KEY=/init/id_rsa-sandbox
 JENKINS_KEY=/jenkins/.ssh/id_rsa
 SSH_OPTIONS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 CI_MANAGEMENT_REPO=/init/ci-management
-GLOBAL_JJB_VERSION=v0.6.0
+GLOBAL_JJB_VERSION=${GLOBAL_JJB_VERSION:-v0.6.0}
 
 # Generate a key for the sandbox user
 if [ ! -f /init/ssh-key-sandbox.done ]; then
@@ -20,7 +20,7 @@ fi
 ##
 # Jenkins Setup
 ##
-./wait-for-it.sh jenkins:8080 -t 30
+/docker-entrypoint-init.d/wait-for-it.sh jenkins:8080 -t 30
 
 # Generate a key for the jenkins user
 if [ ! -f /init/ssh-key-jenkins.done ]; then
@@ -33,7 +33,7 @@ fi
 ##
 # Gerrit Login
 ##
-./wait-for-it.sh gerrit:8080 -t 90
+/docker-entrypoint-init.d/wait-for-it.sh gerrit:8080 -t 90
 
 # Be the first to login to gain Administrative rights
 if [ ! -f /init/step-1.done ]; then

@@ -151,7 +151,18 @@ General:
       in Groovy scripts which could be pulled from environment variables
 
 Nexus:
-- [ ] Setup and configure Nexus
+- [ ] Configure Nexus to use LDAP (admin/admin123, or LDAP)
+- [x] Setup and configure Nexus
+  - [x] Set Markup Formatter to HTML Output
+  - [x] Create 'logs' Nexus site repo.
+  - [x] Add LOGS_SERVER, SILO, NEXUS_URL, JENKINS_HOSTNAME
+  - [x] Create XML config file 'jenkins-log-archives-settings' (depends on credentials)
+  - [x] Install environment injector plugin
+        https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin
+  - [x] Install plugin for build description
+        https://plugins.jenkins.io/description-setter
+  - [x] Manually install postbuildscript.hpi
+        http://mirrors.jenkins-ci.org/plugins/postbuildscript/0.17/postbuildscript.hpi
 
 Gerrit:
 - [ ] Remove postgres container configuration and replace with MariaDB

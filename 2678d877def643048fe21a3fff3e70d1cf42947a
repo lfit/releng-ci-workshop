@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd48e6c3_053a082e",
+        "filename": "README.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in the Jenkins section",
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3bab225_8162d743",
+        "filename": "README.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in the Jenkins section",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 86
+      },
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a42d050c_5e63db24",
+        "filename": "jenkins/scripts/create-nexus-settings.groovy",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "Are you really creating the JJB INI here??? doesn\u0027t look like it",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e1e4dcc_e43077e4",
+        "filename": "jenkins/scripts/create-nexus-settings.groovy",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "Line wrap at 80characters! This is doable with groovy!",
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dc004a1_f9ad75dd",
+        "filename": "jenkins/scripts/create-nexus-settings.groovy",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "Please use 4 space indents and not hard tabs!",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 2
+      },
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc95bbef_fdfb1eea",
+        "filename": "jenkins/scripts/create-nexus-settings.groovy",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "Should be indented by 2 more spaces",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 22
+      },
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f89836e_b848b5f9",
+        "filename": "jenkins/scripts/global-properties.groovy",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2017-11-20T17:34:58Z",
+      "side": 1,
+      "message": "This should be line wrapped at 80 characters",
+      "revId": "2678d877def643048fe21a3fff3e70d1cf42947a",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

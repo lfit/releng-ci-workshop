@@ -18,7 +18,7 @@ exit 1
 
 function print_repos() {
     # Print out a list of array elements
-    local repos=($@)
+    local repos=("$@")
     for repo in "${repos[@]}"; do
         echo -e " - $repo"
     done
@@ -31,7 +31,7 @@ fi
 if [[ -s $KEYFILE ]]; then
     # Upload SSH Public Key
     curl --fail -s -L -X POST -u "sandbox:sandbox" -H "Content-type:text/plain" \
-      -d @$KEYFILE http://gerrit.localhost/a/accounts/self/sshkeys/ > /dev/null
+      -d "@$KEYFILE" http://gerrit.localhost/a/accounts/self/sshkeys/ > /dev/null
 
     # Provide guidance on curl errors
     if [ $? -eq 7 ]; then
@@ -42,7 +42,7 @@ if [[ -s $KEYFILE ]]; then
 
     # Output future guidance
     if [ $? -eq 0 ]; then
-        KEYID=$(ssh-keygen -l -f $KEYFILE)
+        KEYID=$(ssh-keygen -l -f "$KEYFILE")
         GERRIT_REPOS="$(curl -s -L http://gerrit.localhost/projects/ \
             | grep \"id\" | cut -c12- | tr -d '",')"
         echo -e "Successfully uploaded public keyfile:"

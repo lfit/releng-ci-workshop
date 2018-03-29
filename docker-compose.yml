@@ -95,7 +95,6 @@ services:
             - "5432"
     nginx:
         image: jwilder/nginx-proxy:latest
-        restart: always
         container_name: releng-ingress
         ports:
             - "80:80"

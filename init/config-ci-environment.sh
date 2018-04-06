@@ -133,7 +133,7 @@ fi
 #  Upload Jenkins Jobs
 if [ ! -f /init/step-7.done ]; then
     cd $CI_MANAGEMENT_REPO
-    pip install jenkins-job-builder
+    pip install "jenkins-job-builder<2.0.0"
     cat > $CI_MANAGEMENT_REPO/jenkins.ini <<-EOF
 [job_builder]
 ignore_cache=True

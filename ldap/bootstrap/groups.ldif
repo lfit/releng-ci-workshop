@@ -17,20 +17,19 @@ changetype: add
 objectClass: organizationalUnit
 ou: Groups
 
-# Password: sandbox
-dn: uid=sandbox,ou=Users,dc=example,dc=org
+dn: uid=workshop,ou=Users,dc=example,dc=org
 changetype: add
 objectClass: top
 objectClass: person
 objectClass: inetOrgPerson
-cn: Sandbox
+cn: Workshop
 sn: User
-displayname: Sandbox User
-mail: sandbox@example.org
-userpassword: {SSHA}WyQT/fg9FHJ/zcXsdvs51tk5vSlyL0fM
+displayname: Workshop User
+mail: workshop@example.org
+userpassword: {SSHA}81Znic+ah7Tzk1lODaAmi+dbVrTp1iaT
 
-dn: cn=sandbox-admins,ou=Groups,dc=example,dc=org
+dn: cn=workshop-admins,ou=Groups,dc=example,dc=org
 changetype: add
 objectClass: top
 objectClass: groupOfNames
-member: uid=sandbox,ou=Users,dc=example,dc=org
+member: uid=workshop,ou=Users,dc=example,dc=org

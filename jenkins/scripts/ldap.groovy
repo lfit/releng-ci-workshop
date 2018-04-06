@@ -31,7 +31,7 @@ instance.setSecurityRealm(LDAPRealm)
 
 def strategy = new GlobalMatrixAuthorizationStrategy()
 
-strategy.add(Jenkins.ADMINISTER, 'sandbox-admins')
+strategy.add(Jenkins.ADMINISTER, 'workshop-admins')
 
 strategy.add(Jenkins.READ,'anonymous')
 strategy.add(Item.READ,'anonymous')

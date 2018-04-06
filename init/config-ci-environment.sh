@@ -79,7 +79,7 @@ if [ ! -f /init/step-5.done ]; then
     git clone ssh://sandbox@gerrit:29418/ci-management.git $CI_MANAGEMENT_REPO
     mkdir -p $CI_MANAGEMENT_REPO/jjb
     cd $CI_MANAGEMENT_REPO/jjb
-    git submodule add https://gerrit.linuxfoundation.org/infra/releng/global-jjb
+    git submodule add https://github.com/lfit/releng-global-jjb
     cd $CI_MANAGEMENT_REPO/jjb/global-jjb
     git checkout $GLOBAL_JJB_VERSION
     cd $CI_MANAGEMENT_REPO

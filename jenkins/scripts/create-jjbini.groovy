@@ -31,4 +31,12 @@ user=sandbox
 password=sandbox
 query_plugins_info=True""");
     store.save(config);
+
+    println "--> Creating the NPM RC File"
+    CustomConfig npm_config = new CustomConfig("npmrc", "npmrc-file", "NPM RC File","")
+    store.save(npm_config);
+
+    println "--> Creating the Pip Conf File"
+    CustomConfig pip_config = new CustomConfig("pipconf", "pipconf-file", "Pip Conf","")
+    store.save(pip_config);
 }

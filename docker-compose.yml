@@ -6,7 +6,7 @@ services:
         build: ./init
         container_name: releng-init
         environment:
-            - GLOBAL_JJB_VERSION=v0.10.2
+            - GLOBAL_JJB_VERSION=v0.17.0
         volumes:
             - init:/init/
             - jenkins:/jenkins

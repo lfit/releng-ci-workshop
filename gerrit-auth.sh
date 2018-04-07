@@ -30,7 +30,7 @@ fi
 
 if [[ -s $KEYFILE ]]; then
     # Upload SSH Public Key
-    curl --fail -s -L -X POST -u "sandbox:sandbox" -H "Content-type:text/plain" \
+    curl --fail -s -L -X POST -u "workshop:workshop" -H "Content-type:text/plain" \
       -d "@$KEYFILE" http://gerrit.localhost/a/accounts/self/sshkeys/ > /dev/null
 
     # Provide guidance on curl errors
@@ -50,6 +50,6 @@ if [[ -s $KEYFILE ]]; then
         echo -e "\nYou can now clone the available repos:"
         print_repos $GERRIT_REPOS
         echo -e "\nWith the command:"
-        echo -e "  git clone ssh://sandbox@gerrit.localhost:29418/<repo>"
+        echo -e "  git clone ssh://workshop@gerrit.localhost:29418/<repo>"
     fi
 fi

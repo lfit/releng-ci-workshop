@@ -32,7 +32,7 @@ Add the following to /etc/hosts::
   127.0.1.2 gerrit.localhost
   127.0.1.3 nexus.localhost
 
-Jenkins/Gerrit login: sandbox/sandbox
+Jenkins/Gerrit login: workshop/workshop
 Nexus login: admin/admin123
 
 Getting Started
@@ -57,7 +57,7 @@ Gerrit, and a basic job in Jenkins that verifies commits to the
 ci-management repo.
 
 Once the environment is up and running, copy your ssh public-key and add
-it to the sandbox user in Gerrit. This can be either be done through the
+it to the workshop user in Gerrit. This can be either be done through the
 web interface or from the commandline::
 
   ./gerrit-auth.sh ~/.ssh/id_rsa.pub
@@ -65,11 +65,11 @@ web interface or from the commandline::
 Then you can clone the ci-management repo and modify it to your hearts
 content::
 
-  git clone ssh://sandbox@gerrit.localhost:29418/ci-management.git
+  git clone ssh://workshop@gerrit.localhost:29418/ci-management.git
 
 Set the gitreview username::
 
-  git config --add gitreview.username "sandbox"
+  git config --add gitreview.username "workshop"
 
 And ensure the Change-Id hook exists::
 
@@ -153,7 +153,7 @@ The following is a list of automation tasks still needed before the
 environment can be considered stable:
 
 General:
-- [ ] Replace 'sandbox' names with 'workshop' since sandbox was just a
+- [x] Replace 'sandbox' names with 'workshop' since sandbox was just a
       placeholder
 - [ ] Setup OpenLDAP over SSL by default
 - [ ] Make things more configurable. There are a lot of hardcoded names

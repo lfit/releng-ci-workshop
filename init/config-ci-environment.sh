@@ -5,16 +5,16 @@
 # successfully executing.
 #
 
-GERRIT_KEY=/init/id_rsa-sandbox
+GERRIT_KEY=/init/id_rsa-workshop
 JENKINS_KEY=/jenkins/.ssh/id_rsa
 SSH_OPTIONS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 CI_MANAGEMENT_REPO=/init/ci-management
 GLOBAL_JJB_VERSION=${GLOBAL_JJB_VERSION:-v0.6.0}
 
-# Generate a key for the sandbox user
-if [ ! -f /init/ssh-key-sandbox.done ]; then
+# Generate a key for the workshop user
+if [ ! -f /init/ssh-key-workshop.done ]; then
 ssh-keygen -t rsa -N '' -f $GERRIT_KEY
-touch /init/ssh-key-sandbox.done
+touch /init/ssh-key-workshop.done
 fi
 
 ##
@@ -37,7 +37,7 @@ fi
 
 # Be the first to login to gain Administrative rights
 if [ ! -f /init/step-1.done ]; then
-curl -X POST --data "username=sandbox&password=sandbox" http://gerrit:8080/login \
+curl -X POST --data "username=workshop&password=workshop" http://gerrit:8080/login \
     && touch /init/step-1.done
 fi
 
@@ -48,14 +48,14 @@ fi
 
 # Add generated ssh-pubkey to Gerrit keypairs
 if [ ! -f /init/step-2.done ]; then
-curl -X POST --user "sandbox:sandbox" -H "Content-type: plain/text" \
+curl -X POST --user "workshop:workshop" -H "Content-type: plain/text" \
     --data @"$GERRIT_KEY.pub" "http://gerrit:8080/a/accounts/self/sshkeys" \
     && touch /init/step-2.done
 fi
 
 # Create Jenkins ssh user in Gerrit
 if [ ! -f /init/step-3.done ]; then
-ssh $SSH_OPTIONS -p 29418 sandbox@gerrit -i $GERRIT_KEY \
+ssh $SSH_OPTIONS -p 29418 workshop@gerrit -i $GERRIT_KEY \
     gerrit create-account jenkins-workshop --full-name "Jenkins\ Workshop" \
     --group "Non-Interactive\ Users" --ssh-key - < "$JENKINS_KEY.pub" \
     && touch /init/step-3.done
@@ -63,7 +63,7 @@ fi
 
 # Create ci-management repository
 if [ ! -f /init/step-4.done ]; then
-ssh $SSH_OPTIONS -p 29418 sandbox@gerrit -i $GERRIT_KEY \
+ssh $SSH_OPTIONS -p 29418 workshop@gerrit -i $GERRIT_KEY \
     gerrit create-project ci-management --id --so --empty-commit \
     -d "Workshop\ CI-Management\ Repo" -p "All-Projects" \
     && touch /init/step-4.done
@@ -72,11 +72,11 @@ fi
 # Populate ci-management repository with global-jjb
 if [ ! -f /init/step-5.done ]; then
     ssh-keyscan -p 29418 gerrit >> /etc/ssh/ssh_known_hosts
-    git config --file ~/.gitconfig user.email "sandbox@example.org"
-    git config --file ~/.gitconfig user.name "sandbox"
+    git config --file ~/.gitconfig user.email "workshop@example.org"
+    git config --file ~/.gitconfig user.name "workshop"
     eval "$(ssh-agent)"
     ssh-add $GERRIT_KEY
-    git clone ssh://sandbox@gerrit:29418/ci-management.git $CI_MANAGEMENT_REPO
+    git clone ssh://workshop@gerrit:29418/ci-management.git $CI_MANAGEMENT_REPO
     mkdir -p $CI_MANAGEMENT_REPO/jjb
     cd $CI_MANAGEMENT_REPO/jjb
     git submodule add https://gerrit.linuxfoundation.org/infra/releng/global-jjb
@@ -96,7 +96,7 @@ if [ ! -f /init/step-6.done ]; then
 [gerrit]
 host=gerrit.localhost
 port=29418
-username=sandbox
+username=workshop
 project=ci-management.git
 defaultbranch=master
 EOF
@@ -143,8 +143,8 @@ recursive=True
 
 [jenkins]
 url=http://jenkins:8080/
-user=sandbox
-password=sandbox
+user=workshop
+password=workshop
 query_plugins_info=True
 EOF
     # Ensure JJB is installed first
@@ -162,7 +162,7 @@ if [ ! -f /init/step-8.done ]; then
 
     cd $ALL_PROJECTS
     git init
-    git remote add origin ssh://sandbox@gerrit:29418/All-Projects.git
+    git remote add origin ssh://workshop@gerrit:29418/All-Projects.git
     git fetch origin refs/meta/config:refs/remotes/origin/meta/config
     git checkout meta/config
 

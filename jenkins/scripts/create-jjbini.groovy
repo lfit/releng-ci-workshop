@@ -27,8 +27,8 @@ recursive=True
 
 [jenkins]
 url=http://jenkins:8080/
-user=sandbox
-password=sandbox
+user=workshop
+password=workshop
 query_plugins_info=True""");
     store.save(config);
 

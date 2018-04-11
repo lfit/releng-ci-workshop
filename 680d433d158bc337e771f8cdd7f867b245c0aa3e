@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6fd5bfb_f94c7f15",
+        "filename": "jenkins/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2018-04-11T18:47:14Z",
+      "side": 1,
+      "message": "Are we using master of global-jjb? If we are then we want the latest postbuildscript and no longer need this cURL thing.",
+      "revId": "680d433d158bc337e771f8cdd7f867b245c0aa3e",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

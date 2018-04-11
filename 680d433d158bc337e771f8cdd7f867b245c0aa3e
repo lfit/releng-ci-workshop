@@ -16,6 +16,24 @@
       "revId": "680d433d158bc337e771f8cdd7f867b245c0aa3e",
       "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0844906_ccc997b6",
+        "filename": "jenkins/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2018-04-11T19:05:34Z",
+      "side": 1,
+      "message": "Nope. Still using the latest release 0.17.0.",
+      "parentUuid": "a6fd5bfb_f94c7f15",
+      "revId": "680d433d158bc337e771f8cdd7f867b245c0aa3e",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
     }
   ]
 }

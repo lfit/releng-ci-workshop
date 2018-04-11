@@ -20,7 +20,7 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
 # Download PostBuildScript Plugin
 RUN curl --fail -sSL \
-  http://ftp.osuosl.org/pub/jenkins/plugins/postbuildscript/0.17/postbuildscript.hpi \
+  http://ftp.osuosl.org/pub/jenkins/plugins/postbuildscript/0.18.1/postbuildscript.hpi \
   -o /usr/share/jenkins/ref/plugins/postbuildscript.hpi
 
 ENV JENKINS_GROOVY_INIT /usr/share/jenkins/ref/init.groovy.d/

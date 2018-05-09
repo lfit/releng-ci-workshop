@@ -9,7 +9,8 @@ GERRIT_KEY=/init/id_rsa-workshop
 JENKINS_KEY=/jenkins/.ssh/id_rsa
 SSH_OPTIONS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 CI_MANAGEMENT_REPO=/init/ci-management
-GLOBAL_JJB_VERSION=${GLOBAL_JJB_VERSION:-v0.6.0}
+GLOBAL_JJB_VERSION=${GLOBAL_JJB_VERSION:-v0.19.2}
+JJB_VERSION=${JJB_VERSION:-2.0.3}
 
 # Generate a key for the workshop user
 if [ ! -f /init/ssh-key-workshop.done ]; then
@@ -133,7 +134,7 @@ fi
 #  Upload Jenkins Jobs
 if [ ! -f /init/step-7.done ]; then
     cd $CI_MANAGEMENT_REPO
-    pip install "jenkins-job-builder<2.0.0"
+    pip install "jenkins-job-builder==$JJB_VERSION"
     cat > $CI_MANAGEMENT_REPO/jenkins.ini <<-EOF
 [job_builder]
 ignore_cache=True

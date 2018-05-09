@@ -8,13 +8,20 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update -qq \
     && apt-get install --no-install-recommends -y \
-       curl git python python-pip python-dev libyaml-dev \
-       realpath openssh-client \
+       curl \
+       git \
+       libyaml-dev \
+       openssh-client \
+       python \
+       python-dev \
+       python-pip \
+       python-setuptools \
+       realpath \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /docker-entrypoint-init.d/

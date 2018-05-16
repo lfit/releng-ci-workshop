@@ -134,6 +134,8 @@ fi
 #  Upload Jenkins Jobs
 if [ ! -f /init/step-7.done ]; then
     cd $CI_MANAGEMENT_REPO
+    pip install --upgrade wheel
+    pip install --upgrade setuptools
     pip install "jenkins-job-builder==$JJB_VERSION"
     cat > $CI_MANAGEMENT_REPO/jenkins.ini <<-EOF
 [job_builder]

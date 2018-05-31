@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c6b30f5_df5ff466",
+        "filename": "init/config-ci-environment.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2018-05-31T16:49:00Z",
+      "side": 1,
+      "message": "Put setuptools and wheel on the same line so that python\u0027s dependency resolver can resolve the cross dependencies in the same run.\n\nShould add pip to this line too.",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 36
+      },
+      "revId": "ae64d4754d05ccd6fe14b011aae2f80a6fd167b4",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

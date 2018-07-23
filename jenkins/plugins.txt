@@ -11,7 +11,7 @@ cloudbees-folder:6.4
 command-launcher:1.2
 config-file-provider:2.18
 credentials-binding:1.16
-credentials:2.1.16
+credentials:2.1.18
 description-setter:1.10
 display-url-api:2.2.0
 docker-commons:1.11
@@ -34,6 +34,7 @@ icon-shim:2.0.3
 jackson2-api:2.8.11.1
 javadoc:1.4
 jclouds-jenkins:2.14
+jdk-tool:1.1
 jquery-detached:1.2.1
 jsch:0.1.54.2
 junit:1.24
@@ -66,7 +67,7 @@ resource-disposer:0.8
 scm-api:2.2.7
 script-security:1.44
 ssh-agent:1.15
-ssh-credentials:1.13
+ssh-credentials:1.14
 ssh-slaves:1.26
 structs:1.14
 subversion:2.10.5

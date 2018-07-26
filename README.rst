@@ -26,26 +26,23 @@ containers.
 Quick Reference
 ---------------
 
+Modify the .env file::
+
+  CIDR=24
+  SUBNET=172.20.0.1
+
+
 Add the following to /etc/hosts::
 
-  127.0.1.1 jenkins.localhost
-  127.0.1.2 gerrit.localhost
-  127.0.1.3 nexus.localhost
+  172.20.0.1 jenkins.localhost
+  172.20.0.1 gerrit.localhost
+  172.20.0.1 nexus.localhost
 
 Jenkins/Gerrit login: workshop/workshop
 Nexus login: admin/admin123
 
-Getting Started
----------------
-
-Add the following to /etc/hosts::
-
-  127.0.1.1 jenkins.localhost
-  127.0.1.2 gerrit.localhost
-  127.0.1.3 nexus.localhost
-
-.. Note: This is the same as setting the 'Host' header when sending a GET
-   request to localhost: `curl -H "Host: gerrit.localhost" localhost`
+To Run Multiple clusters, clone another ci-workshop
+and change the values in .env so that they are uniqe
 
 .. code-block::
 

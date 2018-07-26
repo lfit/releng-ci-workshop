@@ -1,10 +1,18 @@
 # Container Versions stored in '.env'
 ---
-version: '3'
+version: '3.6'
+networks:
+    default:
+        ipam:
+            driver: default
+            config:
+                - subnet: "${SUBNET}/${CIDR}"
+
+
 services:
     init:
         build: ./init
-        container_name: releng-init
+        container_name: "${RELENGINIT}"
         environment:
             - GLOBAL_JJB_VERSION=v0.19.2
         volumes:
@@ -16,23 +24,23 @@ services:
             - nexus
     ldap:
         image: "osixia/openldap:$OPENLDAP_CONTAINER_VERSION"
-        container_name: releng-ldap
+        container_name: "${RELENGLDAP}"
         env_file: config.env
         command: "--loglevel debug --copy-service"
         volumes:
             - ./ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
         ports:
-            - "636:636"
+            - "636"
     jenkins:
         build:
             context: ./jenkins
             args:
                 - JENKINS_VERSION=$JENKINS_CONTAINER_VERSION
-        container_name: releng-jenkins
+        container_name: "${RELENGJENKINS}"
         env_file: config.env
         environment:
             - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
-            - VIRTUAL_HOST=jenkins.localhost
+            - VIRTUAL_HOST=${RELENGJENKINS}.localhost
             - VIRTUAL_PORT=8080
         volumes:
             - jenkins:/var/jenkins_home
@@ -46,27 +54,29 @@ services:
             - nginx
     jenkins-agent:
         build: ./jenkins/agent
-        container_name: releng-agent
+        container_name: "${RELENGAGENT}"
         env_file: config.env
         ports:
             - "22"
         links:
-            - "nginx:jenkins.localhost"
-            - "nginx:nexus.localhost"
-            - "nginx:gerrit.localhost"
+            - "nginx:${RELENGJENKINS}.localhost"
+            - "nginx:${RELENGNEXUS}.localhost"
+            - "nginx:${RELENGGERRIT}.localhost"
     gerrit:
         image: "openfrontier/gerrit:$GERRIT_CONTAINER_VERSION"
-        container_name: releng-gerrit
+        container_name: "${RELENGGERRIT}"
         env_file: config.env
         environment:
-            - VIRTUAL_HOST=gerrit.localhost
+            - VIRTUAL_HOST=${RELENGGERRIT}.localhost
             - VIRTUAL_PORT=8080
+            - WEBURL=http://${RELENGGERRIT}.localhost
+
         volumes:
             - gerrit:/var/gerrit/review_site
         expose:
             - "8080"
         ports:
-            - "29418:29418"
+            - "${SUBNET}:29418:29418"
         depends_on:
             - ldap
             - nginx
@@ -75,10 +85,10 @@ services:
             - nginx
     nexus:
         image: "sonatype/nexus:$NEXUS_CONTAINER_VERSION"
-        container_name: releng-nexus
+        container_name: "${RELENGNEXUS}"
         env_file: config.env
         environment:
-            - VIRTUAL_HOST=nexus.localhost
+            - VIRTUAL_HOST=${RELENGNEXUS}.localhost
             - VIRTUAL_PORT=8081
         volumes:
             - nexus:/sonatype-work
@@ -90,14 +100,15 @@ services:
             - nginx
     postgres:
         image: postgres:latest
+        container_name: "${RELENGPOSTGRES}"
         env_file: config.env
         expose:
             - "5432"
     nginx:
         image: jwilder/nginx-proxy:latest
-        container_name: releng-ingress
+        container_name: "${RELENGINGRESS}"
         ports:
-            - "80:80"
+            - "${SUBNET}:80:80"
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
 volumes:

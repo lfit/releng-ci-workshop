@@ -16,6 +16,9 @@ import hudson.security.csrf.DefaultCrumbIssuer
 
 def instance = Jenkins.getInstance();
 
+def env = System.getenv()
+String JENKINS_URL = env.get('JENKINSWEBURL')
+
 // Enable Crumb issuer for CSRF protection
 instance.setCrumbIssuer(new DefaultCrumbIssuer(true))
 
@@ -26,8 +29,12 @@ instance.getDescriptor("jenkins.CLI").get().setEnabled(false)
 instance.getInjector().getInstance(AdminWhitelistRule.class).setMasterKillSwitch(false)
 
 // Set the default URL
-def jlc = JenkinsLocationConfiguration.get()
-jlc.setUrl("http://jenkins.localhost/")
-jlc.save()
+
+// Below code does nothing, jenkins is using some other way to guess the root url
+// Oddly it adds a trailing slash when it does
+// that leads to a warning on the console
+//def jlc = JenkinsLocationConfiguration.get()
+//jlc.setUrl("JENKINS_URL", JENKINS_URL)
+//jlc.save()
 
 instance.save()

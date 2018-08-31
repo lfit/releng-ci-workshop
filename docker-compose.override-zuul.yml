@@ -1,0 +1,93 @@
+# Container Versions stored in '.env'
+---
+version: '3'
+services:
+    init:
+        build: ./init
+        environment:
+            - CI_SYSTEM=zuul
+        volumes:
+            - init:/init/
+            - zuul-scheduler:/zuul
+        links:
+            - gerrit
+            - zuul-scheduler
+            - nodepool-launcher
+    agent:
+        build: ./jenkins/agent
+        container_name: releng-agent
+        # container_name: zuul-agent
+        env_file: config.env
+        ports:
+            - "22"
+    zuul-gearman:
+        image: kendu/gearman
+        expose:
+            - "4730"
+    zuul-executor:
+        build: zuul
+        image: zuul
+        command: zuul-executor -d
+        volumes:
+            - ./zuul/executor.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+    zuul-scheduler:
+        build: zuul
+        image: zuul
+        command: zuul-scheduler -d
+        links:
+            - gerrit
+            - zookeeper
+            - "zuul-gearman:gearman"
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+            - ./zuul/main.yaml:/etc/zuul/main.yaml
+            - zuul-scheduler:/var/lib/zuul/
+    zuul-web:
+        build: zuul
+        image: zuul
+        command: zuul-web -d
+        environment:
+            - VIRTUAL_HOST=zuul.localhost
+            - VIRTUAL_PORT=9000
+        expose:
+            - "9000"
+        links:
+            - gerrit
+            - "zuul-gearman:gearman"
+            - nodepool-launcher
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+    nodepool-launcher:
+        build: nodepool
+        image: nodepool
+        command: nodepool-launcher -d
+        environment:
+            - VIRTUAL_HOST=nodepool.localhost
+            - VIRTUAL_PORT=8005
+        expose:
+            - "8005"
+        depends_on:
+            - zookeeper
+        links:
+            - "agent:zuul-agent"
+        volumes:
+            - ./nodepool/nodepool.yaml:/etc/nodepool/nodepool.yaml
+    zookeeper:
+        image: zookeeper
+        restart: always
+        volumes:
+            - zookeeper-data:/data
+            - zookeeper-datalog:/datalog
+        ports:
+            - "2181:2181"
+        env_file: config.env
+        environment:
+            - ZOO_MY_ID=1
+volumes:
+    init:
+    zuul-scheduler:
+    zookeeper-data:
+    zookeeper-datalog:

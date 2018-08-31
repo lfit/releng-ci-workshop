@@ -7,8 +7,9 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-
 FROM ubuntu:16.04
+
+ENV CI_SYSTEM=jenkins
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update -qq \
@@ -31,8 +32,10 @@ WORKDIR /docker-entrypoint-init.d/
 RUN /usr/bin/curl -sSL -O https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
 RUN /bin/chmod +x wait-for-it.sh
 
-COPY config-ci-environment.sh /docker-entrypoint-init.d/
+COPY config-environment.sh /docker-entrypoint-init.d/
+COPY config-jenkins-environment.sh /docker-entrypoint-init.d/
+COPY config-zuul-environment.sh /docker-entrypoint-init.d/
 
 RUN chmod +x /docker-entrypoint-init.d/*.sh
 
-CMD ["/docker-entrypoint-init.d/config-ci-environment.sh"]
+CMD ["/docker-entrypoint-init.d/config-environment.sh"]

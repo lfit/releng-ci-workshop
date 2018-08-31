@@ -54,6 +54,51 @@ services:
             - "nginx:jenkins.localhost"
             - "nginx:nexus.localhost"
             - "nginx:gerrit.localhost"
+    zuul-executor:
+        build: zuul
+        image: zuul
+        command: zuul-executor -d
+        expose:
+            - "4720"
+        depends_on:
+            - zuul-scheduler
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+            - ./zuul/main.yaml:/etc/zuul/main.yaml
+    zuul-scheduler:
+        build: zuul
+        image: zuul
+        command: zuul-scheduler -d
+        links:
+            - "zookeeper"
+        depends_on:
+            - zookeeper
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+            - ./zuul/main.yaml:/etc/zuul/main.yaml
+    nodepool-launcher:
+        build: nodepool
+        image: nodepool
+        command: nodepool-launcher
+        links:
+            - "zookeeper"
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+            - ./zuul/main.yaml:/etc/zuul/main.yaml
+    zookeeper:
+        image: zookeeper
+        restart: always
+        volumes:
+            - zookeeper-data:/data
+            - zookeeper-datalog:/datalog
+        ports:
+            - "2181:2181"
+        env_file: config.env
+        environment:
+            - ZOO_MY_ID=1
     gerrit:
         image: "openfrontier/gerrit:$GERRIT_CONTAINER_VERSION"
         container_name: releng-gerrit
@@ -105,3 +150,5 @@ volumes:
     gerrit:
     nexus:
     init:
+    zookeeper-data:
+    zookeeper-datalog:

@@ -1,0 +1,20 @@
+---
+webapp:
+  port: 8005
+  listen_address: '127.0.0.1'
+elements-dir: /var/lib/nodepool/elements
+images-dir: /var/lib/nodepool/images
+build-log-dir: /var/lib/nodepool/logs
+build-log-retention: 14
+zookeeper-servers:
+  - host: zookeeper
+    port: 2181
+    chroot: /nodepool
+# labels:
+#   - name: my-precise
+#   - name: multi-precise
+# providers:
+#   - name: provider1
+#     cloud: example
+#     pools:
+#       - name: main

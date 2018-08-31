@@ -5,26 +5,36 @@ This is a container environment containing services used by the Linux
 Foundation Release Engineering team. It is loosely influenced by the work
 done by openfrontier_ (author of the Gerrit container).
 
+The goal of this project is to provide our Release Engineering team a
+simple way to bring up an environment representative of our production
+CI environment where we can work on proof-of-concepts, test
+configuration, or compare differences between service versions.
+
+Here are a few examples of things this project can be used for:
+
+ * Verifing and testing upgrades to Jenkins and Gerrit plugins and
+   releases.
+ * Testing Jenkins and Gerrit-Trigger integration
+ * Nexus configuration
+ * Gerrit/LDAP group integration
+
 The primary services are:
 
  * Gerrit
- * Jenkins
  * Nexus
-
-And the secondary services that support these:
-
  * OpenLDAP
+ * PostgreSQL
  * NGINX
- * MariaDB [TODO]
- * HAProxy [TODO]
+
+These are supplemented with Jenkins by default or optionally by Zuul.
 
 Most of the documentation for individual services and how they are
-configured can be found under the `config/` directory, and
-`$SERVICE.env` files contain environment_ variables used by the docker
-containers.
+configured can be found in the `config.env` file. This file defines most
+of the environment variable passed to the containers.
 
 Quick Reference
 ---------------
+
 
 Add the following to /etc/hosts::
 
@@ -47,6 +57,9 @@ Add the following to /etc/hosts::
 .. Note: This is the same as setting the 'Host' header when sending a GET
    request to localhost: `curl -H "Host: gerrit.localhost" localhost`
 
+Jenkins
+~~~~~~~
+
 .. code-block::
 
   docker-compose up -d
@@ -55,6 +68,13 @@ Will bring up an environment containing all the services with
 authentication backed by LDAP, a simple ci-management repo in
 Gerrit, and a basic job in Jenkins that verifies commits to the
 ci-management repo.
+
+Zuul
+~~~~
+
+.. code-block::
+
+  docker-compose -f docker-compose.yml -f docker-compose.override-zuul.yml up -d
 
 Once the environment is up and running, copy your ssh public-key and add
 it to the workshop user in Gerrit. This can be either be done through the
@@ -132,19 +152,6 @@ This is done in a weakly idempotent fashion by creating files after the
 command execute successfuly, so that if the environment is restarted the
 container doesn't die or modify existing data.
 
-Goals
-~~~~~
-
-The goal of this project is to have an easily created workshop where
-releng work can be tested or proof-of-concepts created.
-
-Some examples:
-
- * Jenkins Plugin upgrades
- * Gerrit upgrades
- * Jenkins and Gerrit-Trigger testing
- * Nexus configuration
- * Gerrit/LDAP group integration
 
 TODO
 ~~~~

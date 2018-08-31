@@ -1,0 +1,86 @@
+# Container Versions stored in '.env'
+---
+version: '3'
+services:
+    init:
+        build: ./init
+        environment:
+            - CI_SYSTEM=zuul
+        volumes:
+            - init:/init/
+            - zuul-scheduler:/zuul
+        links:
+            - gerrit
+            - zuul-scheduler
+            - nodepool-launcher
+#   agent:
+#       image: hello-world
+    zuul-executor:
+        build: zuul
+        image: zuul
+        command: zuul-executor -d
+        expose:
+            - "4730"
+        volumes:
+            - ./zuul/executor.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+            - ./zuul/main.yaml:/etc/zuul/main.yaml
+    zuul-scheduler:
+        build: zuul
+        image: zuul
+        command: zuul-scheduler -d
+        depends_on:
+            - zookeeper
+        links:
+            - gerrit
+            - "zuul-executor:gearman"
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+            - ./zuul/main.yaml:/etc/zuul/main.yaml
+            - zuul-scheduler:/var/lib/zuul/
+    zuul-web:
+        build: zuul
+        image: zuul
+        command: zuul-web -d
+        depends_on:
+            - zookeeper
+            - zuul-scheduler
+            - zuul-executor
+        environment:
+            - VIRTUAL_HOST=zuul.localhost
+            - VIRTUAL_PORT=9000
+        ports:
+            - "9000"
+        links:
+            - gerrit
+            - zuul-scheduler
+            - "zuul-executor:gearman"
+            - nodepool-launcher
+        volumes:
+            - ./zuul/zuul.conf:/etc/zuul/zuul.conf
+            - ./zuul/logging.conf:/etc/zuul/logging.conf
+    nodepool-launcher:
+        build: nodepool
+        image: nodepool
+        command: nodepool-launcher -d
+        depends_on:
+            - zookeeper
+        volumes:
+            - ./nodepool/nodepool.yaml:/etc/nodepool/nodepool.yaml
+    zookeeper:
+        image: zookeeper
+        restart: always
+        volumes:
+            - zookeeper-data:/data
+            - zookeeper-datalog:/datalog
+        ports:
+            - "2181:2181"
+        env_file: config.env
+        environment:
+            - ZOO_MY_ID=1
+volumes:
+    init:
+    zuul-scheduler:
+    zookeeper-data:
+    zookeeper-datalog:

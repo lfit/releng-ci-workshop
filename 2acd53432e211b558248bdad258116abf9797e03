@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70ba7c49_94c79040",
+        "filename": "README.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-09-12T18:18:05Z",
+      "side": 1,
+      "message": "You realize that 127/8 is a fully usable subnet right? The localhost subnet is a _full_ Class A subnet that you\u0027re able to use as you want. Moving to a potentially fully routed subnet seems like something that you don\u0027t want.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "2acd53432e211b558248bdad258116abf9797e03",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "data": {
+    "name": "logs",
+    "repoType": "hosted",
+    "providerRole": "org.sonatype.nexus.proxy.repository.WebSiteRepository",
+    "exposed": true,
+    "id": "logs",
+    "provider": "site",
+    "writePolicy": "ALLOW_WRITE",
+    "browseable": true,
+    "indexable": true,
+    "notFoundCacheTTL": 1440,
+    "repoPolicy": "MIXED"
+  }
+}

@@ -1,0 +1,142 @@
+---
+- hosts: all
+  vars:
+      ci_system: "{{ lookup('env', 'CI_SYSTEM') }}"
+  tasks:
+      - name: Include Base Variables
+        include_vars:
+            file: vars/default.yaml
+      - name: Create workshop user and ssh key
+        user:
+            name: 'workshop'
+            generate_ssh_key: true
+            uid: 1005
+            ssh_key_bits: 2048
+            ssh_key_file: '{{ workshop_ssh_keyfile }}'
+      - name: Wait for Gerrit UI
+        wait_for:
+            host: 'gerrit'
+            port: '8080'
+      - name: Login to Gerrit to claim Admin rights
+        uri:
+            url: 'http://gerrit:8080/login'
+            method: 'POST'
+            body: "username=workshop&password=workshop"
+            status_code: 302
+      - name: Upload sshkey to Admin user
+        uri:
+            url: 'http://gerrit:8080/a/accounts/self/sshkeys'
+            method: 'POST'
+            user: 'workshop'
+            password: 'workshop'
+            body: "{{ lookup('file', '{{ workshop_ssh_keyfile }}.pub') }}"
+            status_code: 201
+      - name: Wait for Gerrit SSH Interface
+        wait_for:
+            host: 'gerrit'
+            port: '29418'
+      - name: Collect list of Repositories
+        uri:
+            url: 'http://gerrit:8080/projects/'
+            return_content: true
+        register: projects
+      - name: Create ci-management Repository
+        command: >
+            ssh {{ ssh_options }} -p  29418 workshop@gerrit -i {{ workshop_ssh_keyfile }}
+            gerrit create-project ci-management --id --so --empty-commit -d "Workshop\ CI-Management\ Repo" -p "All-Projects"
+        # [5:] is used to skip the XSS token added by Gerrit
+        when: '(projects.content[5:] | from_json)["ci-management"] is not defined'
+      - name: Configure Git User Email
+        git_config:
+            name: user.email
+            scope: global
+            value: "workshop@example.org"
+      - name: Configure Git User Name
+        git_config:
+            name: user.name
+            scope: global
+            value: "workshop"
+      - name: Configure Git SSH Command/Key
+        git_config:
+            name: core.sshCommand
+            scope: global
+            value: "ssh -i {{ workshop_ssh_keyfile }} -F /dev/null -o StrictHostKeyChecking=no"
+      - name: Clone ci-management repository
+        git:
+            repo: 'ssh://workshop@gerrit:29418/ci-management.git'
+            dest: '{{ ci_management_repo }}'
+            key_file: '{{ workshop_ssh_keyfile }}'
+            update: false
+      - name: Copy gitreview file to ci-managment
+        copy:
+            src: .gitreview
+            dest: '{{ ci_management_repo }}/.gitreview'
+      - name: Create initial commit to ci-management
+        shell: |
+            git add .
+            git commit -am "Initial Commit"
+            git push origin HEAD:refs/heads/master
+        args:
+            chdir: '{{ ci_management_repo }}'
+      - name: Clone All-Projects
+        git:
+            repo: 'ssh://workshop@gerrit:29418/All-Projects.git'
+            refspec: 'refs/meta/config:refs/remotes/origin/meta/config'
+            version: 'meta/config'
+            dest: '{{ all_projects_repo }}'
+            key_file: '{{ workshop_ssh_keyfile }}'
+            update: false
+      - name: Configure Verified Label
+        blockinfile:
+            path: '{{ all_projects_repo }}/project.config'
+            marker: "; {mark} Ansible Managed"
+            block: |
+                [label "Verified"]
+                    function = MaxWithBlock
+                    defaultValue = 0
+                    value = -1 Fails
+                    value = 0 No score
+                    value = +1 Verified
+                    copyAllScoresIfNoCodeChange = true
+      - name: Allow non-interactive users Verified Rights
+        blockinfile:
+            path: '{{ all_projects_repo }}/project.config'
+            marker: "; {mark} Ansible Managed"
+            insertafter: '[access "refs/heads/*"]'
+            block: |
+                label-Verified = -1..+1 group Non-Interactive Users
+                label-Verified = -1..+1 group Administrators
+                label-Verified = -1..+1 group Non-Interactive Users
+                label-Verified = -1..+1 group Project Owners
+      - name: Create verified label commit in All-Projects
+        shell: |
+            git add .
+            git commit -am "Create Verified Label"
+            git push origin HEAD:refs/meta/config
+        args:
+            chdir: '{{ all_projects_repo }}'
+      - name: Wait for Nexus Web
+        wait_for:
+            host: 'nexus'
+            port: '8081'
+      - name: Copy repo.json to tmp directory
+        copy:
+            src: nexus-repo.json
+            dest: '/var/tmp/repo.json'
+      - name: Check for Logs repo in Nexus
+        uri:
+            url: http://nexus:8081/nexus/service/local/repositories
+            return_content: true
+        register: nexus_repos
+      - name: Create Logs repo in Nexus
+        uri:
+            url: http://nexus:8081/nexus/service/local/repositories
+            method: POST
+            body: "{{ lookup('file', '/var/tmp/repo.json') }}"
+            user: admin
+            password: admin123
+            body_format: json
+            status_code: 201
+        when: '(nexus_repos.content | parse_xml("files/nexus-repo-schema.yaml"))["repositories"]["logs"] is not defined'
+      - name: Include {{ ci_system }} Tasks
+        include_tasks: "tasks/{{ ci_system }}.yaml"

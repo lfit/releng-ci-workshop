@@ -1,0 +1,6 @@
+[gerrit]
+host=gerrit.localhost
+port=29418
+username=workshop
+project=ci-management.git
+defaultbranch=master

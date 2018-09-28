@@ -25,23 +25,23 @@ RUN curl --fail -sSL \
 
 ENV JENKINS_GROOVY_INIT /usr/share/jenkins/ref/init.groovy.d/
 
-# Configure Basic Security
-COPY scripts/basic-security-setup.groovy $JENKINS_GROOVY_INIT
-
-# Configure LDAP
-COPY scripts/ldap.groovy $JENKINS_GROOVY_INIT
-
-# Configure Gerrit-Trigger
-COPY scripts/gerrit-config.groovy $JENKINS_GROOVY_INIT
-
 # Set Global Properties
-COPY scripts/global-properties.groovy $JENKINS_GROOVY_INIT
-
-# Create Jenkins SSH Agent
-COPY scripts/create-jenkins-agent.groovy $JENKINS_GROOVY_INIT
+COPY scripts/00_global-properties.groovy $JENKINS_GROOVY_INIT
 
 # Create JJB INI in Config File Plugin
-COPY scripts/create-jjbini.groovy $JENKINS_GROOVY_INIT
+COPY scripts/10_create-jjbini.groovy $JENKINS_GROOVY_INIT
+
+# Create Jenkins SSH Agent
+COPY scripts/20_create-jenkins-agent.groovy $JENKINS_GROOVY_INIT
+
+# Configure Basic Security
+COPY scripts/30_basic-security-setup.groovy $JENKINS_GROOVY_INIT
 
 # Create Nexus settings.xml
-COPY scripts/create-nexus-settings.groovy $JENKINS_GROOVY_INIT
+COPY scripts/40_create-nexus-settings.groovy $JENKINS_GROOVY_INIT
+
+# Configure Gerrit-Trigger
+COPY scripts/50_gerrit-config.groovy $JENKINS_GROOVY_INIT
+
+# Configure LDAP
+COPY scripts/60_ldap.groovy $JENKINS_GROOVY_INIT

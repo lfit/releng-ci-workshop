@@ -1,0 +1,15 @@
+---
+# We only grab the ID from the Nexus XML response as we don't care about
+# any values right now: just whether or not the repo already exists.
+vars:
+  repositories_item:
+    key: "{{ item.id }}"
+    values:
+      id: "{{ item.id }}"
+
+keys:
+  repositories:
+    top: data/repositories-item
+    value: "{{ repositories_item }}"
+    items:
+      id: id

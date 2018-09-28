@@ -7,32 +7,15 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+FROM python:3
 
-FROM ubuntu:16.04
+ENV CI_SYSTEM=jenkins
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update -qq \
-    && apt-get install --no-install-recommends -y \
-       curl \
-       git \
-       libyaml-dev \
-       openssh-client \
-       python \
-       python-dev \
-       python-pip \
-       python-setuptools \
-       realpath \
-    && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir ansible docker-py
 
-RUN mkdir /docker-entrypoint-init.d/
+RUN mkdir /etc/ansible
+RUN mkdir /usr/src/ansible
 
-WORKDIR /docker-entrypoint-init.d/
+WORKDIR /usr/src/ansible
 
-RUN /usr/bin/curl -sSL -O https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
-RUN /bin/chmod +x wait-for-it.sh
-
-COPY config-ci-environment.sh /docker-entrypoint-init.d/
-
-RUN chmod +x /docker-entrypoint-init.d/*.sh
-
-CMD ["/docker-entrypoint-init.d/config-ci-environment.sh"]
+CMD ["ansible-playbook", "/usr/src/ansible/site.yaml", "-i", "/etc/ansible/inventory.ini"]

@@ -1,0 +1,76 @@
+---
+- name: Include Base Variables
+  include_vars:
+      file: vars/default.yaml
+- name: Create jenkins user and ssh key
+  user:
+      name: 'jenkins'
+      generate_ssh_key: true
+      uid: 1000
+      ssh_key_bits: 2048
+      ssh_key_file: '{{ jenkins_ssh_keyfile }}'
+- name: Wait for Gerrit SSH Interface
+  wait_for:
+      host: 'gerrit'
+      port: '29418'
+- name: Check existance of Jenkins Workshop Gerrit user
+  uri:
+      url: 'http://gerrit:8080/accounts/?q=username:jenkins-workshop&o=DETAILS'
+      return_content: true
+  register: jenkins_gerrit_account_json
+- name: Create fact containing Gerrit accounts
+  set_fact:
+      jenkins_gerrit_account: '{{ jenkins_gerrit_account_json.content[5:] }}'
+- name: Debug Gerrit Accounts
+  debug:
+      msg: '{{ jenkins_gerrit_account }}'
+- name: Create Jenkins Workshop User
+  shell: >
+      cat {{ jenkins_ssh_keyfile }}.pub | ssh {{ ssh_options }} -p  29418 workshop@gerrit -i {{ workshop_ssh_keyfile }}
+      gerrit create-account jenkins-workshop --full-name "Jenkins\ Workshop"
+      --group "Non-Interactive\ Users" --ssh-key -
+  when: (jenkins_gerrit_account | length == 0)
+- name: Clone ci-management repository
+  git:
+      repo: 'ssh://workshop@gerrit:29418/ci-management.git'
+      dest: '{{ ci_management_repo }}'
+      key_file: '{{ workshop_ssh_keyfile }}'
+      update: false
+- name: Create JJB Directory
+  file:
+      path: '{{ ci_management_repo }}/jjb'
+      state: directory
+- name: Add Global-JJB to ci-management
+  command: 'git submodule add {{ global_jjb_url }} global-jjb'
+  args:
+    chdir: '{{ ci_management_repo }}/jjb'
+    creates: '{{ ci_management_repo }}/jjb/global-jjb'
+- name: Add ci-management defaults
+  copy:
+      dest: '{{ ci_management_repo }}/{{ item }}'
+      src: 'files/{{ item }}'
+  with_items:
+      - 'jjb/ci-management.yaml'
+      - 'jjb/defaults.yaml'
+- name: Add jenkins.ini
+  copy:
+      dest: '{{ ci_management_repo }}/jenkins.ini'
+      src: 'files/jjb/jenkins.ini'
+- name: Create initial commit for the ci-management repo
+  shell: |
+      cd jjb/global-jjb
+      git checkout {{ global_jjb_version }}
+      cd ..
+      git add .
+      git commit -am "Initial JJB Files"
+      git push origin HEAD:refs/heads/master
+  args:
+      chdir: '{{ ci_management_repo }}'
+- name: Install Jenkins Job Builder
+  pip:
+      name: 'jenkins-job-builder'
+      version: '{{ jjb_version }}'
+- name: Upload Jobs to Jenkins
+  command: 'jenkins-jobs --conf jenkins.ini update -r jjb'
+  args:
+      chdir: '{{ ci_management_repo }}'

@@ -32,3 +32,6 @@ MANIFEST
 All-Projects
 All-Users
 ci-management
+
+# Ansible files
+*.retry

@@ -22,6 +22,30 @@
       "revId": "13602b8ffc7b89eda04e625ca79583d06d8e0743",
       "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f1879aa_851a094f",
+        "filename": "jenkins/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2018-10-03T21:13:36Z",
+      "side": 1,
+      "message": "That\u0027s fair",
+      "parentUuid": "b9a7cdb4_d4e0236d",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "13602b8ffc7b89eda04e625ca79583d06d8e0743",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
     }
   ]
 }

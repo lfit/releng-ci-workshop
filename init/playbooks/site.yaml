@@ -125,12 +125,12 @@
             dest: '/var/tmp/repo.json'
       - name: Check for Logs repo in Nexus
         uri:
-            url: http://nexus:8081/nexus/service/local/repositories
+            url: http://nexus:8081/service/local/repositories
             return_content: true
         register: nexus_repos
       - name: Create Logs repo in Nexus
         uri:
-            url: http://nexus:8081/nexus/service/local/repositories
+            url: http://nexus:8081/service/local/repositories
             method: POST
             body: "{{ lookup('file', '/var/tmp/repo.json') }}"
             user: admin

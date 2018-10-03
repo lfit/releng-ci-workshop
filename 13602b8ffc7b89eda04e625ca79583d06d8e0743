@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a7cdb4_d4e0236d",
+        "filename": "jenkins/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2018-10-03T20:27:48Z",
+      "side": 1,
+      "message": "Since you\u0027re already numbering these things for the run order during startup... I think they should be properly listed in numerical order here as well!",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "13602b8ffc7b89eda04e625ca79583d06d8e0743",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

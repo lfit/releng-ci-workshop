@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a57581_78171f76",
+        "filename": "init/playbooks/files/nexus-repo-schema.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 192
+      },
+      "writtenOn": "2018-10-04T00:30:11Z",
+      "side": 1,
+      "message": "This should be indented by 2 fewer spaces.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 27
+      },
+      "revId": "8560c0aefa97a7122d5b30b3f0c39d4aa95e0b5f",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c1db9ae_9fc2cd86",
+        "filename": "init/playbooks/tasks/jenkins.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 192
+      },
+      "writtenOn": "2018-10-04T00:30:11Z",
+      "side": 1,
+      "message": "These two lines should be indented by two more spaces.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "8560c0aefa97a7122d5b30b3f0c39d4aa95e0b5f",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

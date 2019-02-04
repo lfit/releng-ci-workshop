@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ab50cd_165b2578",
+        "filename": "jenkins/agent/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2019-02-04T05:22:03Z",
+      "side": 1,
+      "message": "Perhaps one package per row? Easier to maintain that way.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "e8fe32ad115831c97571fe8173ac1da668a3dae9",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a39d7475_03aa6416",
+        "filename": "jenkins/agent/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2019-02-04T05:22:03Z",
+      "side": 1,
+      "message": "Can\u0027t you use a variable here for the gid?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "e8fe32ad115831c97571fe8173ac1da668a3dae9",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f455235_bae7e990",
+        "filename": "jenkins/agent/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2019-02-04T05:22:03Z",
+      "side": 1,
+      "message": "Do we need to run as root (default run as root)",
+      "revId": "e8fe32ad115831c97571fe8173ac1da668a3dae9",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09",
+      "unresolved": false
+    }
+  ]
+}

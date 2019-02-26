@@ -62,8 +62,6 @@ QxR/mcboAaX1EvMLTjeFqDC5XK6gwC67s0H0p2gC91e6hzQs5Qb7M7g7LqD28YEW
 Tja198bt428xTsjxxffuhekDQt8hbEO6RJFJPxhHQIWVo8708lWj
 -----END RSA PRIVATE KEY-----""")
 
-def private_key_on_master = new BasicSSHUserPrivateKey.UsersPrivateKeySource();
-
 // Credentials for connecting to an SSH Jenkins Agent
 def jenkins_agent_credentials = new BasicSSHUserPrivateKey(
   CredentialsScope.GLOBAL,
@@ -80,7 +78,7 @@ def gerrit_credentials = new BasicSSHUserPrivateKey(
   CredentialsScope.GLOBAL,
   "ciworkshop-jenkins-ssh", // ID
   "jenkins-workshop", // username
-  private_key_on_master,
+  null,
   null, // password
   "Gerrit User" // description
 )

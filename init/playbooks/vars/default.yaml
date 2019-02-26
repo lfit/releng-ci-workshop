@@ -9,3 +9,7 @@ ssh_options: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 global_jjb_version: "{{ lookup('env', 'GLOBAL_JJB_VERSION') | default('v0.19.2', true) }}"
 global_jjb_url: https://github.com/lfit/releng-global-jjb
 jjb_version: "{{ lookup('env', 'JJB_VERSION') | default('2.0.3', true) }}"
+
+credentials_id: ciworkshop-jenkins-ssh
+credentials_username: jenkins-workshop
+credentials_description: Gerrit user

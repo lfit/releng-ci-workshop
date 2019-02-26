@@ -23,13 +23,16 @@
             method: 'POST'
             body: "username=workshop&password=workshop"
             status_code: 302
+      - name: Remove ssh-rsa from sshkey
+        set_fact:
+            workshop_ssh_key_modified: "{{ lookup('file', '{{ workshop_ssh_keyfile }}.pub') }}"
       - name: Upload sshkey to Admin user
         uri:
             url: 'http://gerrit:8080/a/accounts/self/sshkeys'
             method: 'POST'
             user: 'workshop'
             password: 'workshop'
-            body: "{{ lookup('file', '{{ workshop_ssh_keyfile }}.pub') }}"
+            body: "{{ workshop_ssh_key_modified }}"
             status_code: 201
       - name: Wait for Gerrit SSH Interface
         wait_for:

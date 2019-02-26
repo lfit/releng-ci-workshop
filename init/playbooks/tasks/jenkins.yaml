@@ -9,6 +9,28 @@
       uid: 1000
       ssh_key_bits: 2048
       ssh_key_file: '{{ jenkins_ssh_keyfile }}'
+- name: Set Jenkins Workshop SSH Key fact
+  set_fact:
+      credentials_sshkey: "{{ lookup('file', jenkins_ssh_keyfile) }}"
+- name: Put down Jenkins Credential template
+  template:
+      src: jenkins-credentials.xml
+      dest: /jenkins/jenkins-credentials.xml
+- name: Install Jenkins CLI
+  get_url:
+      url: 'http://jenkins:8080/jnlpJars/jenkins-cli.jar'
+      dest: /jenkins/jenkins-cli.jar
+- name: Add Workshop Credentials to Jenkins
+  environment:
+      JENKINS_URL: http://jenkins:8080/
+      JENKINS_USER_ID: workshop
+      JENKINS_API_TOKEN: workshop
+  shell: |
+      cat jenkins-credentials.xml | java -jar jenkins-cli.jar -http \
+      update-credentials-by-xml "system::system::jenkins" "(global)" \
+      "{{ credentials_id }}"
+  args:
+      chdir: '/jenkins'
 - name: Wait for Gerrit SSH Interface
   wait_for:
       host: 'gerrit'

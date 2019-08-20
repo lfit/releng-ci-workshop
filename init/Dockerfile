@@ -13,7 +13,7 @@ ENV CI_SYSTEM=jenkins
 ENV ANSIBLE_STDOUT_CALLBACK=yaml
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -yq \
-  openjdk-8-jdk \
+  openjdk-11-jdk \
   python3-apt \
   && apt-get clean
 RUN pip install --no-cache-dir ansible docker-py

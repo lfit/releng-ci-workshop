@@ -8,6 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
        libffi-dev \
        libssl-dev \
        python \
+       python-wheel \
        python-pip \
        python-tox \
        python-dev \

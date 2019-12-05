@@ -9,6 +9,14 @@
       uid: 1000
       ssh_key_bits: 2048
       ssh_key_file: '{{ jenkins_ssh_keyfile }}'
+- name: Check private key format
+  shell: |
+      head -1 '{{ jenkins_ssh_keyfile }}'
+  register: jenkins_ssh_key_header
+- name: Ensure keys is in PEM format (not new OpenSSH format)
+  shell: |
+      ssh-keygen -f '{{ jenkins_ssh_keyfile }}' -m PEM -p -P "" -N ""
+  when: (jenkins_ssh_key_header.stdout | regex_search("OPENSSH"))
 - name: Set Jenkins Workshop SSH Key fact
   set_fact:
       credentials_sshkey: "{{ lookup('file', jenkins_ssh_keyfile) }}"

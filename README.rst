@@ -67,6 +67,11 @@ content::
 
   git clone ssh://workshop@gerrit.localhost:29418/ci-management.git
 
+
+Move into the cloned directory::
+
+  cd ci-management
+
 Set the gitreview username::
 
   git config --add gitreview.username "workshop"

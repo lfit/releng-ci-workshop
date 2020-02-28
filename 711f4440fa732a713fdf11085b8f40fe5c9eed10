@@ -1,0 +1,7 @@
+Verified+1: Jenkins CI <releng+lf-jenkins@linuxfoundation.org>
+Code-Review+2: Bengt Thuree <bthuree@linuxfoundation.org>
+Submitted-by: Bengt Thuree <bthuree@linuxfoundation.org>
+Submitted-at: Fri, 28 Feb 2020 01:58:13 +0000
+Reviewed-on: https://gerrit.linuxfoundation.org/infra/c/releng/ci-workshop/+/63223
+Project: releng/ci-workshop
+Branch: refs/heads/master

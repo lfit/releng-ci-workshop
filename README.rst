@@ -69,6 +69,7 @@ content::
 
 Set the gitreview username::
 
+  cd ci-management
   git config --add gitreview.username "workshop"
 
 And ensure the Change-Id hook exists::

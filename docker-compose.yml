@@ -57,23 +57,23 @@ services:
             - nginx
         links:
             - nginx
-    artifactory:
-        image: "docker.bintray.io/jfrog/artifactory-oss:$ARTIFACTORY_CONTAINER_VERSION"
-        container_name: releng-artifactory
-        env_file: config.env
-        environment:
-            - VIRTUAL_HOST=artifactory.localhost
-            - VIRTUAL_PORT=8081
-        volumes:
-            - artifactory:/var/opt/jfrog/artifactory
-        expose:
-            - "80"
-            - "443"
-            - "8081"
-        depends_on:
-            - nginx
-        links:
-            - nginx
+#    artifactory:
+#        image: "docker.bintray.io/jfrog/artifactory-oss:$ARTIFACTORY_CONTAINER_VERSION"
+#        container_name: releng-artifactory
+#        env_file: config.env
+#        environment:
+#            - VIRTUAL_HOST=artifactory.localhost
+#            - VIRTUAL_PORT=8081
+#        volumes:
+#            - artifactory:/var/opt/jfrog/artifactory
+#        expose:
+#            - "80"
+#            - "443"
+#            - "8081"
+#        depends_on:
+#            - nginx
+#        links:
+#            - nginx
     postgres:
         image: postgres:latest
         container_name: releng-postgres
@@ -90,5 +90,5 @@ services:
 volumes:
     gerrit:
     nexus:
-    artifactory:
+#    artifactory:
     init:

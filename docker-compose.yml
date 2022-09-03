@@ -1,94 +1,94 @@
 # Container Versions stored in '.env'
 ---
-version: '3'
+version: "3"
 services:
-    init:
-        build:
-            dockerfile: Dockerfile
-            context: ./init/
-        container_name: releng-init
-        volumes:
-            - ./init/inventory.ini:/etc/ansible/inventory.ini
-            - ./init/playbooks:/usr/src/ansible
-            - init:/init/
-        links:
-            - gerrit
-            - nexus
-    ldap:
-        image: "osixia/openldap:$OPENLDAP_CONTAINER_VERSION"
-        container_name: releng-ldap
-        env_file: config.env
-        command: "--loglevel debug --copy-service"
-        volumes:
-            - ./ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
-        ports:
-            - "636:636"
-    gerrit:
-        image: "openfrontier/gerrit:$GERRIT_CONTAINER_VERSION"
-        container_name: releng-gerrit
-        env_file: config.env
-        environment:
-            - VIRTUAL_HOST=gerrit.localhost
-            - VIRTUAL_PORT=8080
-        volumes:
-            - gerrit:/var/gerrit/review_site
-        expose:
-            - "8080"
-        ports:
-            - "29418:29418"
-        depends_on:
-            - ldap
-            - nginx
-        links:
-            - ldap
-            - nginx
-    nexus:
-        image: "sonatype/nexus:$NEXUS_CONTAINER_VERSION"
-        container_name: releng-nexus
-        env_file: config.env
-        environment:
-            - VIRTUAL_HOST=nexus.localhost
-            - VIRTUAL_PORT=8081
-        volumes:
-            - nexus:/sonatype-work
-        expose:
-            - "8081"
-        depends_on:
-            - nginx
-        links:
-            - nginx
-#    artifactory:
-#        image: "docker.bintray.io/jfrog/artifactory-oss:$ARTIFACTORY_CONTAINER_VERSION"
-#        container_name: releng-artifactory
-#        env_file: config.env
-#        environment:
-#            - VIRTUAL_HOST=artifactory.localhost
-#            - VIRTUAL_PORT=8081
-#        volumes:
-#            - artifactory:/var/opt/jfrog/artifactory
-#        expose:
-#            - "80"
-#            - "443"
-#            - "8081"
-#        depends_on:
-#            - nginx
-#        links:
-#            - nginx
-    postgres:
-        image: postgres:latest
-        container_name: releng-postgres
-        env_file: config.env
-        expose:
-            - "5432"
-    nginx:
-        image: jwilder/nginx-proxy:latest
-        container_name: releng-ingress
-        ports:
-            - "80:80"
-        volumes:
-            - /var/run/docker.sock:/tmp/docker.sock:ro
+  init:
+    build:
+      dockerfile: Dockerfile
+      context: ./init/
+    container_name: releng-init
+    volumes:
+      - ./init/inventory.ini:/etc/ansible/inventory.ini
+      - ./init/playbooks:/usr/src/ansible
+      - init:/init/
+    links:
+      - gerrit
+      - nexus
+  ldap:
+    image: "osixia/openldap:$OPENLDAP_CONTAINER_VERSION"
+    container_name: releng-ldap
+    env_file: config.env
+    command: "--loglevel debug --copy-service"
+    volumes:
+      - ./ldap/bootstrap/groups.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-groups.ldif
+    ports:
+      - "636:636"
+  gerrit:
+    image: "openfrontier/gerrit:$GERRIT_CONTAINER_VERSION"
+    container_name: releng-gerrit
+    env_file: config.env
+    environment:
+      - VIRTUAL_HOST=gerrit.localhost
+      - VIRTUAL_PORT=8080
+    volumes:
+      - gerrit:/var/gerrit/review_site
+    expose:
+      - "8080"
+    ports:
+      - "29418:29418"
+    depends_on:
+      - ldap
+      - nginx
+    links:
+      - ldap
+      - nginx
+  nexus:
+    image: "sonatype/nexus:$NEXUS_CONTAINER_VERSION"
+    container_name: releng-nexus
+    env_file: config.env
+    environment:
+      - VIRTUAL_HOST=nexus.localhost
+      - VIRTUAL_PORT=8081
+    volumes:
+      - nexus:/sonatype-work
+    expose:
+      - "8081"
+    depends_on:
+      - nginx
+    links:
+      - nginx
+  #    artifactory:
+  #        image: "docker.bintray.io/jfrog/artifactory-oss:$ARTIFACTORY_CONTAINER_VERSION"
+  #        container_name: releng-artifactory
+  #        env_file: config.env
+  #        environment:
+  #            - VIRTUAL_HOST=artifactory.localhost
+  #            - VIRTUAL_PORT=8081
+  #        volumes:
+  #            - artifactory:/var/opt/jfrog/artifactory
+  #        expose:
+  #            - "80"
+  #            - "443"
+  #            - "8081"
+  #        depends_on:
+  #            - nginx
+  #        links:
+  #            - nginx
+  postgres:
+    image: postgres:latest
+    container_name: releng-postgres
+    env_file: config.env
+    expose:
+      - "5432"
+  nginx:
+    image: jwilder/nginx-proxy:latest
+    container_name: releng-ingress
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
 volumes:
-    gerrit:
-    nexus:
-#    artifactory:
-    init:
+  gerrit:
+  nexus:
+  #    artifactory:
+  init:

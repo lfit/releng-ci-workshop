@@ -33,22 +33,24 @@ if [[ -s $KEYFILE ]]; then
     curl --fail -s -L -X POST -u "workshop:workshop" -H "Content-type:text/plain" \
       -d "@$KEYFILE" http://gerrit.localhost/a/accounts/self/sshkeys/ > /dev/null
 
+    exit_code=$?
+
     # Provide guidance on curl errors
-    if [ $? -eq 7 ]; then
+    if [ $exit_code -eq 7 ]; then
         echo -e "\nPlease start Gerrit first:\n  docker-compose up -d"
-    elif [ $? -eq 22 ]; then
+    elif [ $exit_code -eq 22 ]; then
         echo -e "\nPlease wait for Gerrit to finish running and try again"
     fi
 
     # Output future guidance
-    if [ $? -eq 0 ]; then
+    if [ $exit_code -eq 0 ]; then
         KEYID=$(ssh-keygen -l -f "$KEYFILE")
         GERRIT_REPOS="$(curl -s -L http://gerrit.localhost/projects/ \
             | grep \"id\" | cut -c12- | tr -d '",')"
         echo -e "Successfully uploaded public keyfile:"
         echo "  $KEYID"
         echo -e "\nYou can now clone the available repos:"
-        print_repos $GERRIT_REPOS
+        print_repos "$GERRIT_REPOS"
         echo -e "\nWith the command:"
         echo -e "  git clone ssh://workshop@gerrit.localhost:29418/<repo>"
     fi

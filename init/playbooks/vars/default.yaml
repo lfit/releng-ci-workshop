@@ -1,10 +1,10 @@
 ---
-ci_management_repo: '/init/ci-management'
-all_projects_repo: '/init/all-projects'
-workshop_ssh_keyfile: '/init/id_rsa-workshop'
-jenkins_ssh_keyfile: '/jenkins/.ssh/id_rsa'
+ci_management_repo: "/init/ci-management"
+all_projects_repo: "/init/all-projects"
+workshop_ssh_keyfile: "/init/id_rsa-workshop"
+jenkins_ssh_keyfile: "/jenkins/.ssh/id_rsa"
 # Options to pass to ssh when cloning repos
-ssh_options: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+ssh_options: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 # Version of Global JJB the ci-management repo should initially contain
 global_jjb_version: "{{ lookup('env', 'GLOBAL_JJB_VERSION') | default('v0.19.2', true) }}"
 global_jjb_url: https://github.com/lfit/releng-global-jjb

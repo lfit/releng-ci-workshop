@@ -5,4 +5,4 @@
     # lf-infra defaults
     jenkins-ssh-credential: ciworkshop-jenkins-ssh
     gerrit-server-name: ciworkshop
-    lftools-version: '<1.0.0'
+    lftools-version: "<1.0.0"

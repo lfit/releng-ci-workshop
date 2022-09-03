@@ -1,44 +1,44 @@
 ---
-version: '3'
+version: "3"
 services:
-    init:
-        environment:
-            - CI_SYSTEM=jenkins
-            - GLOBAL_JJB_VERSION=v0.19.2
-        volumes:
-            - jenkins:/jenkins
-        links:
-            - jenkins
-    jenkins:
-        build:
-            context: ./jenkins
-            args:
-                - JENKINS_VERSION=$JENKINS_CONTAINER_VERSION
-        container_name: releng-jenkins
-        env_file: config.env
-        environment:
-            - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
-            - VIRTUAL_HOST=jenkins.localhost
-            - VIRTUAL_PORT=8080
-        volumes:
-            - jenkins:/var/jenkins_home
-        expose:
-            - "8080"
-        depends_on:
-            - ldap
-            - nginx
-        links:
-            - ldap
-            - nginx
-    jenkins-agent:
-        build: ./jenkins/agent
-        container_name: releng-agent
-        env_file: config.env
-        ports:
-            - "22"
-        links:
-            - "nginx:jenkins.localhost"
-            - "nginx:nexus.localhost"
-            - "nginx:gerrit.localhost"
+  init:
+    environment:
+      - CI_SYSTEM=jenkins
+      - GLOBAL_JJB_VERSION=v0.19.2
+    volumes:
+      - jenkins:/jenkins
+    links:
+      - jenkins
+  jenkins:
+    build:
+      context: ./jenkins
+      args:
+        - JENKINS_VERSION=$JENKINS_CONTAINER_VERSION
+    container_name: releng-jenkins
+    env_file: config.env
+    environment:
+      - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+      - VIRTUAL_HOST=jenkins.localhost
+      - VIRTUAL_PORT=8080
+    volumes:
+      - jenkins:/var/jenkins_home
+    expose:
+      - "8080"
+    depends_on:
+      - ldap
+      - nginx
+    links:
+      - ldap
+      - nginx
+  jenkins-agent:
+    build: ./jenkins/agent
+    container_name: releng-agent
+    env_file: config.env
+    ports:
+      - "22"
+    links:
+      - "nginx:jenkins.localhost"
+      - "nginx:nexus.localhost"
+      - "nginx:gerrit.localhost"
 volumes:
-    jenkins:
+  jenkins:

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76bfcbd2_b4fd2a78",
+        "filename": "tox.ini",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 577
+      },
+      "writtenOn": "2022-09-12T19:48:19Z",
+      "side": 1,
+      "message": "this /bin/sh looks like can be part of the line before",
+      "revId": "d467581fa602c8c065abdb4f079c8c4b26abf568",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03f7dec7_6eb82c00",
+        "filename": "tox.ini",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 577
+      },
+      "writtenOn": "2022-09-12T19:48:19Z",
+      "side": 1,
+      "message": "this \u0027pre-commit\u0027 looks like can be part of the line before",
+      "revId": "d467581fa602c8c065abdb4f079c8c4b26abf568",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09"
+    }
+  ]
+}

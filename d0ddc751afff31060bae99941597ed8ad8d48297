@@ -35,6 +35,24 @@
       "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba92624b_88636f87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2022-09-12T17:56:11Z",
+      "side": 1,
+      "message": "Removed the config. Shellcheck gets taken care of by pre-commit now",
+      "parentUuid": "da5dea93_427c745c",
+      "revId": "d0ddc751afff31060bae99941597ed8ad8d48297",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c100602b_c3dd24e1",
@@ -48,6 +66,30 @@
       "writtenOn": "2022-09-07T02:47:25Z",
       "side": 1,
       "message": "\u0027py38\u0027 on CentOS8+",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 6
+      },
+      "revId": "d0ddc751afff31060bae99941597ed8ad8d48297",
+      "serverId": "f2a2391d-0403-4fa5-b183-4056999a8a09"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fba26c9e_47c6ff1a",
+        "filename": "tox.ini",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2022-09-12T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c100602b_c3dd24e1",
       "range": {
         "startLine": 4,
         "startChar": 2,
